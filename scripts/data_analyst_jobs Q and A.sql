@@ -43,13 +43,16 @@ WHERE review_count BETWEEN 500 AND 1000;
 
 --6.	Show the average star rating for companies in each state. The output should show the state as `state` and the average rating for the state as `avg_rating`. Which state shows the highest average rating?
 
-SELECT location,company,AVG(star_rating) AS avg_rating
+SELECT location AS state ,AVG(star_rating) AS avg_rating
 FROM data_analyst_jobs
-GROUP BY location,company;
+WHERE star_rating IS NOT NULL
+GROUP BY location
+ORDER BY avg_rating;
 
 --7.	Select unique job titles from the data_analyst_jobs table. How many are there?
 SELECT COUNT(DISTINCT title)
 FROM data_analyst_jobs;
+--ANS 881
 
 --8.	How many unique job titles are there for California companies?
 
@@ -84,11 +87,11 @@ WHERE title ILIKE '%analyst%';
 --ANS 774
 
 --12.	How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
-SELECT title, COUNT(title)
+SELECT title, COUNT(DISTINCT title)
 FROM data_analyst_jobs
 GROUP BY title
-HAVING title NOT ILIKE '%analyst%%'
-AND  title NOT ILIKE '%analytics%%';
+HAVING title NOT ILIKE '%analyst%'
+AND  title NOT ILIKE '%analytics%';
 --ANS 4 ,Tableau
 
 --*BONUS:**
